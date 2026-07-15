@@ -1,0 +1,25 @@
+### CreateTask
+POST http://localhost:3000/task/create-task
+Content-Type: application/json
+
+{
+    "title": "New Task",
+    "description": "This is a new task",
+    "status": "todo",
+    "priority": "high",
+    "dueDate": "2024-12-31"
+}
+###Get All Tasks
+GET http://localhost:3000/task/get-tasks
+
+### Get Task By ID
+GET http://localhost:3000/task/get-tasks/6a53a064a98503200a5e1573
+
+### Update Task
+PUT http://localhost:3000/task/update-tasks
+Content-Type: application/json
+
+{
+    "_id": "6a53a064a98503200a5e1573",
+    "title": "Updated Task Title"
+}
