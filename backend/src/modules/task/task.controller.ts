@@ -9,7 +9,7 @@ import {ITask} from "./task.interface.js";
 export class TaskController{
     constructor(@inject(TaskProvider) private taskProvider: TaskProvider){} 
     
-    public async  createTask(req:Request,res:Response){
+    public async  createTask(req:Request,res:Response):Promise<void>{
         try{
             const taskData: ITask = matchedData(req);
             const task = await this.taskProvider.createTask(taskData);
@@ -17,17 +17,22 @@ export class TaskController{
 
         }
         catch(error){  
-            res.status(500).json({message:'Internal Server Error',error});     
+            res.status(500).json({message:'Internal Server Error',
+                error});     
 }
 
 }
 public async getAllTasks(req:Request,res:Response):Promise<void>{
     try{
-        const tasks = await this.taskProvider.getAllTasks();
-        if(tasks.length===0){
+        const {limit=10,page=1,order='asc',status,priority}=matchedData(req);
+        const paginatedTasks = await this.taskProvider.getAllTasks({
+            limit,page,order,status,priority
+        });
+
+        if(paginatedTasks.tasks.length===0){
             res.status(404).json({message:'No tasks found'});
         }
-        res.status(200).json(tasks);
+        res.status(200).json(paginatedTasks);
     }
     catch(error){
         res.status(500).json({message:'Internal Server Error',error});
@@ -35,11 +40,11 @@ public async getAllTasks(req:Request,res:Response):Promise<void>{
 }
 public async getTaskById(req:Request,res:Response):Promise<void>{
     try{
-        const taskId:string =req.params.id?.toString() || '';
-        if(!taskId){
+       const {id}=matchedData(req);
+        if(!id){
         res.status(400).json({message:"this task is not vaild"})
         }
-        const task=await this.taskProvider.getTaskById(taskId);
+        const task=await this.taskProvider.getTaskById(id);
         if(!task){
             res.status(404).json({message:'Task not found'});
         }

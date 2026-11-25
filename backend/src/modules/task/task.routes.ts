@@ -5,7 +5,8 @@ import {updateTaskValidator} from "./validation/updateTask.Validator.js";
 import {getTaskByIdValidator} from "./validation/getTaskById.vaildator.js";
 import {getAllTasksValidator} from "./validation/getAlltasks.validate.js";
 import { validate } from "../../middleware/validate.middleware.js";
-import { inject } from "inversify";
+import { inject ,injectable} from "inversify";
+@injectable()
 export class TaskRoutes{
     public router: Router;
     constructor(@inject(TaskController) private taskController: TaskController){
@@ -13,13 +14,13 @@ export class TaskRoutes{
         this.initializeRoutes();
     }
     private initializeRoutes():void{
-        this.router.post('/create-task',validate,createTaskValidator,this.taskController.createTask.bind(this.taskController));
-        this.router.get('/get-tasks',validate,getAllTasksValidator,this.taskController.getAllTasks.bind(this.taskController));
-        this.router.get('/get-tasks/:id',validate,getTaskByIdValidator,this.taskController.getTaskById.bind(this.taskController));
-        this.router.put('/update-tasks',validate,updateTaskValidator,this.taskController.updateTask.bind(this.taskController));
+        this.router.post('/create-task',createTaskValidator,validate,this.taskController.createTask.bind(this.taskController));
+        this.router.get('/get-tasks',getAllTasksValidator,validate,this.taskController.getAllTasks.bind(this.taskController));
+        this.router.get('/get-tasks/:id',getTaskByIdValidator,validate,this.taskController.getTaskById.bind(this.taskController));
+        this.router.put('/update-tasks',updateTaskValidator,validate,this.taskController.updateTask.bind(this.taskController));
 
        
-        
+           
  
 
 

@@ -31,7 +31,7 @@ export const createTaskValidator=checkSchema({
         notEmpty:true,
         errorMessage:"priority must be of the specified values",
         isIn:{
-            options:[["low","normal","high"]]
+            options:[["low","medium","high"]]
         }
     },
     dueDate:{
