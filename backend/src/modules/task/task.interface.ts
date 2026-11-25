@@ -1,3 +1,5 @@
+import { HydratedDocument } from "mongoose";
+
 export interface ITask{
     title:string;
     description:string;
@@ -15,5 +17,12 @@ export interface filteringOptions {
         status?:"todo"|"inprogress"|"completed";
         priority?:"low"|"medium"|"high";
     }
+export interface PaginatedTasks{
+        tasks:HydratedDocument<ITask>[];
+        totalTasks:number;
+        currentPage:number;
+        totalPages:number;
+        limit:number;
+    };
 
 
