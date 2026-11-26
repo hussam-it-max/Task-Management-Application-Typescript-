@@ -2,36 +2,34 @@ import {checkSchema} from "express-validator";
 export const createTaskValidator=checkSchema({
     title:{
         in:["body"],
-        notEmpty:true,
-        errorMessage:"Title is required",
-        isString:true,
+        isString:{errorMessage:"Title must be a string",bail:true},
+        trim:true,
+        notEmpty:{ errorMessage: "Title is required" },
         isLength:{
             options:{max:100},
             errorMessage:"title should be max 100 chars",
         },
-       trim:true
     },
     description:{
         in:["body"],
-        notEmpty:true,
-        errorMessage:"Description is required",
-        isString:true,
+        isString:{errorMessage:"Title must be a string",bail:true},
         trim:true,
+        notEmpty:{errorMessage:"Description  must be a string",bail:true},      
     },
     status:{
         in:["body"],
-        notEmpty:true,
-        errorMessage:"Status must be of the specified values",
+        optional:true,
         isIn:{
-            options:[["todo","inProgress","completed"]]
+            options:[["todo","inProgress","completed"]],
+            errorMessage: "Status must be one of: todo, inProgress, completed",
         }
     },
     priority:{
         in:["body"],
-        notEmpty:true,
-        errorMessage:"priority must be of the specified values",
+        optional:true,
         isIn:{
-            options:[["low","medium","high"]]
+            options:[["low","medium","high"]],
+            errorMessage: "Priority must be one of: low, medium, high",
         }
     },
     dueDate:{

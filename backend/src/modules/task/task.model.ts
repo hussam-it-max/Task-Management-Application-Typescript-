@@ -4,11 +4,14 @@ import {ITask} from  "./task.interface.js"
 const taskSchema: Schema<ITask>=new Schema({
     title:{
         type:String,
-        required:true
+        required:true,
+        trim:true,
+        maxLength:100,
     },
     description:{
         type:String,
-        required:true   },
+        required:true,
+    trim:true},
         status:{
             type:String,
             enum:['todo','inProgress','completed'],

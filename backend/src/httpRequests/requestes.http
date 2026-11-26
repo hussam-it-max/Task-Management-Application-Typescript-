@@ -1,4 +1,5 @@
-### CreateTask
+
+CreateTask
 POST http://localhost:3000/task/create-task
 Content-Type: application/json
 
@@ -9,7 +10,7 @@ Content-Type: application/json
     "priority": "high",
     "dueDate": "2024-12-31"
 }
-###Get All Tasks
+Get All Tasks ###
 GET http://localhost:3000/task/get-tasks
 
 ### Get Task By ID
