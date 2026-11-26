@@ -29,9 +29,6 @@ public async getAllTasks(req:Request,res:Response):Promise<void>{
             limit,page,order,status,priority
         });
 
-        if(paginatedTasks.tasks.length===0){
-            res.status(404).json({message:'No tasks found'});
-        }
         res.status(200).json(paginatedTasks);
     }
     catch(error){
@@ -41,9 +38,6 @@ public async getAllTasks(req:Request,res:Response):Promise<void>{
 public async getTaskById(req:Request,res:Response):Promise<void>{
     try{
        const {id}=matchedData(req);
-        if(!id){
-        res.status(400).json({message:"this task is not vaild"})
-        }
         const task=await this.taskProvider.getTaskById(id);
         if(!task){
             res.status(404).json({message:'Task not found'});
